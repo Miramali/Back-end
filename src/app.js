@@ -1,7 +1,7 @@
 const cors = require('cors')
 require('../db/mongoose')
-const experss = require('express')
-const app = experss()
+const express = require('express')
+const app = express()
 
 const port = process.env.PORT || 5000
 require('../db/mongoose')
