@@ -27,8 +27,7 @@ const login = async function (req, res) {
         res.status(200).send([user, token])
     }
     catch (e) {
-        res.status(400).json(e.message)
+        res.status(400).json(e)
     }
 }
-
 module.exports = { register, login }
