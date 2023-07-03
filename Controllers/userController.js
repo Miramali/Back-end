@@ -19,4 +19,16 @@ const register = async function(req, res){
     }
 }
 
-module.exports = register;
+// Login
+const login = async function (req, res) {
+        try {
+            const user = await User.findByCredentials(req.body.email, req.body.password);
+            res.status(200).json('Logged in')
+        }
+        catch (e) {
+            res.status(400).json('User not found')
+        }
+    }
+
+
+module.exports = { register, login };

@@ -56,6 +56,19 @@ userSchema.methods.toJson = function () {
   return userObject;
 };
 
+// Login
+userSchema.statics.findByCredentials = async (mail, pass) => {
+  const user = await User.findOne({ email: mail });
+  if (!user) {
+    throw new Error('Error logging')
+  }
+  const isMatch = await bcryptjs.compare(pass, user.password)
+  if (!isMatch) {
+    throw new Error('Error logging')
+  }
+  return user
+}
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
