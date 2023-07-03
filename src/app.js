@@ -12,7 +12,6 @@ app.use(express.json())
 app.use(cors())
 app.use(OpportunityRouter);
 app.use(userRouter)
-
 app.listen(port, () => {
-  console.log("the localhost is " + port)
+  console.log("The localhost is " + port)
 })

@@ -30,7 +30,4 @@ const login = async function (req, res) {
         res.status(400).json(e)
     }
 }
-
 module.exports = { register, login }
-// module.exports = login
-// module.exports = { register, login };
