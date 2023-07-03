@@ -1,8 +1,8 @@
 const User = require('../Models/userModel')
 
-const register = async function(req, res){
-    try{
-        if(!req.body.name || !req.body.email || !req.body.password){
+const register = async function (req, res) {
+    try {
+        if (!req.body.name || !req.body.email || !req.body.password) {
             throw new Error('name, email and password are required')
         }
 
@@ -11,12 +11,24 @@ const register = async function(req, res){
             email: req.body.email,
             password: req.body.password
         })
+        const token = await newUser.generateToken()
         await newUser.save()
-        return res.status(201).json("New user has been created")
-    }catch(e){
-        console.log(e.message)
+        res.status(200).send([newUser, token])
+    } catch (e) {
         return res.status(400).json(e.message)
     }
 }
 
-module.exports = register;
+// Login
+const login = async function (req, res) {
+    try {
+        const user = await User.findByCredentials(req.body.email, req.body.password);
+        const token = await user.generateToken()
+        res.status(200).send([user, token])
+    }
+    catch (e) {
+        res.status(400).json(e.message)
+    }
+}
+
+module.exports = { register, login }
