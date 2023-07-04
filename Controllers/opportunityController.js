@@ -1,4 +1,4 @@
-const OpportunityModel = require('../model/opportunityModel');
+const OpportunityModel = require('../Models/opportunityModel');
 
 const getAllOpportunities = async (req, res) => {
     try {

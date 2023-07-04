@@ -4,14 +4,17 @@ const express = require('express')
 const app = express()
 
 const port = process.env.PORT || 5000
-require('../db/mongoose')
 const userRouter = require('../Routes/userRoute')
 const OpportunityRouter = require('../Routes/OpportunityRoute');
+const mailRouter = require("../Routes/mailRouter")
 
 app.use(express.json())
 app.use(cors())
 app.use(OpportunityRouter);
 app.use(userRouter)
+app.use(mailRouter)
+
+
 app.listen(port, () => {
   console.log("The localhost is " + port)
 })

@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken')
-const Users = require('../model/user')
+const User = require('../Models/userModel')
 const auth = async (req, res, next) => {
     try {
 
         const token = req.header('Authorization').replace('Bearer ', '')
         const tokenVerify = jwt.verify(token, 'user')
 
-        const user = await Users.findOne({ id: tokenVerify._id, tokens: token })
+        const user = await User.findOne({ id: tokenVerify._id, tokens: token })
         if (!user) {
             throw new Error('you must be user')
         }
