@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const MentorSchema = new mongoose.Schema({
+const MenteeSchema = new mongoose.Schema({
     lookingFor:{
         type : String ,
         required:true
@@ -36,6 +36,6 @@ const MentorSchema = new mongoose.Schema({
 },{timestamps:true})
 
 
-const MentorInfo = mongoose.model('MentorInfo', MentorSchema);
+const MenteeInfo = mongoose.model('MenteeInfo', MenteeSchema);
 
-module.exports = MentorInfo;
+module.exports = MenteeInfo;
