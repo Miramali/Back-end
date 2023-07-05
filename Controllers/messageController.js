@@ -1,7 +1,7 @@
 // messageController.js
 const Message = require("../Models/messageModel");
 const User = require("../Models/userModel");
-const Mentor = require("../Models/MentorProfile");
+const Mentee = require("../Models/MenteeProfile");
 const jwt = require("jsonwebtoken");
 
 // عملية إنشاء مسج جديد
