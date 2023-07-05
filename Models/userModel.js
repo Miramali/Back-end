@@ -9,7 +9,15 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-
+  googleId: {
+    type: String,
+  },
+  gitId: {
+    type: String,
+  },
+  facebookId: {
+    type: String,
+  },
   password: {
     type: String,
     required: true,
