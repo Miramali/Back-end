@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
-
   email: {
     type: String,
     required: true,
@@ -42,8 +41,21 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-  ]
+  ],
+  // messages : [
+  //   {
+  //     type : mongoose.Schema.Types.ObjectId,
+  //     ref  :'Message',
+  //   }
+  // ]
 });
+
+userSchema.virtual("messages" , {
+  ref : "Message",
+  foreignField : "sender",
+  localField   :"_id"
+})
+
 
 userSchema.pre("save", async function () {
   if (this.isModified("password")) {

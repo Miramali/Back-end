@@ -7,12 +7,19 @@ const port = process.env.PORT || 5000
 const userRouter = require('../Routes/userRoute')
 const OpportunityRouter = require('../Routes/OpportunityRoute');
 const mailRouter = require("../Routes/mailRouter")
+const mentorRouter = require("../Routes/MentorProfile");
+const messageRouter = require("../Routes/messageRouter");
 
 app.use(express.json())
 app.use(cors())
 app.use(OpportunityRouter);
 app.use(userRouter)
 app.use(mailRouter)
+app.use(mentorRouter);
+app.use(messageRouter);
+
+// for mentee ruseme
+app.use("/uploads", express.static("uploads"));
 
 
 app.listen(port, () => {
