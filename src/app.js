@@ -12,6 +12,7 @@ const messageRouter = require("../Routes/messageRouter");
 const comment = require("../Routes/comments");
 const passport = require("passport");
 const socialLogin = require("../Routes/SocialAuth");
+const newsletterRouter = require('../Routes/newsletterRoute')
 
 dotenv.config();
 app.use(express.json())
@@ -25,6 +26,7 @@ app.use(menteeRouter);
 app.use(messageRouter);
 app.use(passport.initialize());
 app.use(socialLogin);
+app.use(newsletterRouter)
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
