@@ -14,6 +14,7 @@ const messageRouter = require("../Routes/messageRouter");
 const comment = require("../Routes/comments");
 const passport = require("passport");
 const socialLogin = require("../Routes/SocialAuth");
+const newsletterRouter = require('../Routes/newsletterRoute')
 
 
 const port = process.env.PORT || 5000
@@ -30,6 +31,7 @@ app.use(menteeRouter);
 app.use(messageRouter);
 app.use(passport.initialize());
 app.use(socialLogin);
+app.use(newsletterRouter)
 app.use("/uploads", express.static("uploads"));
 
 app.use((err, req, res, next) => {
