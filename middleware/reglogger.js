@@ -15,14 +15,13 @@ const logEvents = async (message, logFileName) => {
             await fsPromises.mkdir(__dirname, '..', 'logs')
         }
         await fsPromises.appendFile(path.join(__dirname, '..', 'logs', logFileName), logItem)
-
     } catch (e) {
         console.log(e)
     }
 }
 
 const logger = (req, res, next) => {
-    const requestBody = util.inspect(req.body); // to show data
+    const requestBody = util.inspect(req.body); // to show data instead of undefined
     logEvents(`${req.method}\t${req.url}\t${requestBody}`, 'reqlog.log');
     next();
 }
