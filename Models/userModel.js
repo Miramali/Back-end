@@ -34,34 +34,29 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+
   email: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
     unique: true,
     validate(val) {
       if (!validator.isEmail(val)) throw new Error("email is invalid");
     },
   },
+
   tokens: [
     {
       type: String,
       required: true,
     },
   ],
-  // messages : [
-  //   {
-  //     type : mongoose.Schema.Types.ObjectId,
-  //     ref  :'Message',
-  //   }
-  // ]
 });
 
-userSchema.virtual("messages" , {
-  ref : "Message",
-  foreignField : "sender",
-  localField   :"_id"
+userSchema.virtual("messages", {
+  ref: "Message",
+  foreignField: "sender",
+  localField: "_id"
 })
 
 

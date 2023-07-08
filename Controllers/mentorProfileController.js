@@ -1,9 +1,9 @@
 
-const Mentor = require('../Models/mentorProfileModel')
+const Profile = require('../Models/ProfileModel')
 
 const PostMentor = async (req, res) => {
     try {
-        const mentor = new Mentor({ ...req.body })
+        const mentor = new Profile({ ...req.body })
         await mentor.save()
         res.status(200).send(mentor)
     } catch (e) {
@@ -16,7 +16,7 @@ const PostMentor = async (req, res) => {
 
 const GetMentors = async (req, res) => {
     try {
-        const mentor = await Mentor.find({})
+        const mentor = await Profile.find({}).populate({ path: 'user', select: '-tokens' })
         res.status(200).send(mentor)
     } catch (e) {
         res.status(500).send(e)
@@ -28,7 +28,7 @@ const GetMentors = async (req, res) => {
 const getById = async (req, res) => {
     try {
         const _id = req.params.id
-        const mentor = await Mentor.findById(_id)
+        const mentor = await Profile.findById(_id).populate({ path: 'user', select: '-tokens' })
         if (!mentor) {
             res.status(404).send('UNABLE TO FIND Mentor')
         } else {
@@ -45,7 +45,7 @@ const getById = async (req, res) => {
 const PatchMentor = async (req, res) => {
     try {
         const _id = req.params.id
-        const mentor = await Mentor.findByIdAndUpdate(_id, req.body, {
+        const mentor = await Profile.findByIdAndUpdate(_id, req.body, {
             new: true,
             runValidators: true
         })
@@ -65,7 +65,7 @@ const PatchMentor = async (req, res) => {
 const DeleteMentor = async (req, res) => {
     try {
         const _id = req.params.id
-        const mentor = await Mentor.findByIdAndDelete(_id)
+        const mentor = await Profile.findByIdAndDelete(_id)
         if (!mentor) {
             return res.status(404).send('UNABLE TO FIND Mentor')
         }
