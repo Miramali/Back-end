@@ -19,11 +19,10 @@ const { logger } = require('../middleware/reglogger')
 const errorHandle = require('../middleware/errorLogger')
 const corsOptions = require('../config/corsOptions')
 
-
+const calendar=require("../Routes/calender")
 const port = process.env.PORT || 5000
 dotenv.config();
 
-// use
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use(logger)
@@ -36,6 +35,9 @@ app.use(messageRouter);
 app.use(passport.initialize());
 app.use(socialLogin);
 app.use(errorHandle);
+app.use(comment);
+app.use(calendar)
+app.use(socialLogin)
 app.use(newsletterRouter)
 app.use("/uploads", express.static("uploads"));
 
@@ -46,5 +48,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log("The localhost is " + port)
+  console.log("The localhost is " + 5000)
 })
