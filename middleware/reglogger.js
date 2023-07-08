@@ -3,6 +3,7 @@
 const { format } = require('date-fns')
 const { v4: uuid } = require('uuid')
 const fs = require('fs')
+const util = require('util');
 const fsPromises = require('fs').promises
 const path = require('path')
 
@@ -21,8 +22,9 @@ const logEvents = async (message, logFileName) => {
 }
 
 const logger = (req, res, next) => {
-    logEvents(`${req.method}\t${req.url}\t${req.headers.origin}`, 'reqlog.log')
-    next()
+    const requestBody = util.inspect(req.body); // to show data
+    logEvents(`${req.method}\t${req.url}\t${requestBody}`, 'reqlog.log');
+    next();
 }
 
 module.exports = { logger, logEvents }

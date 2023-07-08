@@ -10,11 +10,9 @@ const subscribeToNewsletter = async function (req, res) {
             .then(() => newsletter.transport())
             .then(() => { return res.status(200).json("Welcome to our newsletter") })
             .catch((e) => {
-                console.log(e.message)
                 return res.status(404).json(e.message)
             })
     } catch (e) {
-        console.log(e.message)
         return res.status(400).json(e.message)
     }
 }

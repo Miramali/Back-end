@@ -1,11 +1,11 @@
 const createError = require("../utils/createError");
 const Comment = require("../Models/comments");
-const mentorApplication=require('../Models/opportunityModel')
+const mentorApplication = require('../Models/opportunityModel')
 
 const addComment = async (req, res, next) => {
   try {
     const id = req.params.mentorApplicationId;
-    const newComment = new Comment({ ...req.body, userId: req.userId ,mentorApplicationId:id});
+    const newComment = new Comment({ ...req.body, userId: req.userId, mentorApplicationId: id });
     const savedComment = await newComment.save();
     res.status(200).send(savedComment);
   } catch (err) {

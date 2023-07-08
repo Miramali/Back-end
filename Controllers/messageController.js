@@ -8,7 +8,6 @@ const jwt = require("jsonwebtoken");
 const createMessage = async (req, res) => {
   try {
     const { senderId } = req.params;
-    console.log(senderId);
 
     //check is the sender exist
     const sender = await User.findById(senderId);
@@ -17,7 +16,6 @@ const createMessage = async (req, res) => {
     }
 
     const { receiverId, messageContent } = req.body;
-    console.log(req.body);
 
     // التحقق مما إذا كان المرسل إلية في جدول
     const receiver = await User.findById(receiverId);
@@ -30,8 +28,6 @@ const createMessage = async (req, res) => {
       receiverId,
       messageContent,
     });
-
-    console.log(newMessage);
 
     const savedMessage = await newMessage.save();
 
@@ -47,7 +43,6 @@ const createMessage = async (req, res) => {
 
 const getMessagesById = async (req, res) => {
   const _id = req.params.id;
-  // console.log(senderId)
   Message.findById(_id)
     .then((message) => {
       if (!message) {

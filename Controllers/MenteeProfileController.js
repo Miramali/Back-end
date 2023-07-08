@@ -1,8 +1,8 @@
-const MenteeInfo = require("../Models/MenteeProfile");
+const Profile = require('../Models/ProfileModel')
 
 //show the list of mentorInfo
 const getAllMentee = (req, res, next) => {
-    MenteeInfo.find().populate({ path: 'user' })
+    Profile.find().populate({ path: 'user', select: '-tokens' })
         .then((response) => {
             res.json({ response });
         })
@@ -13,7 +13,7 @@ const getAllMentee = (req, res, next) => {
 
 // add new mentor
 const addNewMentee = (req, res, next) => {
-    let mentee = new MenteeInfo({
+    let mentee = new Profile({
         lookingFor: req.body.lookingFor,
         designation: req.body.designation,
         location: req.body.location,
@@ -22,7 +22,6 @@ const addNewMentee = (req, res, next) => {
         availableForHiring: req.body.availableForHiring,
         user: req.user._id,
     });
-    console.log(mentee);
 
     mentee.save()
         .then((response) => {
@@ -36,7 +35,7 @@ const addNewMentee = (req, res, next) => {
 //get mentor by id
 const getMentee = async (req, res, next) => {
     const _id = req.params.id;
-    MenteeInfo.findById(_id)
+    Profile.findById(_id).populate({ path: 'user', select: '-tokens' })
         .then((mentee) => {
             if (!mentee) {
                 return res.status(404).send("mentee not found");
@@ -53,7 +52,7 @@ const getMentee = async (req, res, next) => {
 const updateMentee = (req, res, next) => {
     const menteeId = req.params.id;
 
-    MenteeInfo.findByIdAndUpdate(
+    Profile.findByIdAndUpdate(
         menteeId,
         {
             lockingFor: req.body.lockingFor,
@@ -80,8 +79,7 @@ const updateMentee = (req, res, next) => {
 const removeMentee = async (req, res, next) => {
     try {
         const id = req.params.id;
-        console.log("delete", id);
-        const mentee = await MenteeInfo.findByIdAndDelete(id);
+        const mentee = await Profile.findByIdAndDelete(id);
         if (!mentee) {
             return res.status(404).send(" i cant find this mentee to delete");
         }

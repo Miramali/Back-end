@@ -34,21 +34,17 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+
   email: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
     unique: true,
     validate(val) {
       if (!validator.isEmail(val)) throw new Error("email is invalid");
     },
   },
-  role: {
-    type: String,
-    enum: ['mentee', 'mentor'],
-    default: 'mentor'
-  },
+
   tokens: [
     {
       type: String,
