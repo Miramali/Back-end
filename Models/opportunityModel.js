@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.set('strictQuery', true ); // Set strictQuery option to false
+mongoose.set('strictQuery', true); // Set strictQuery option to false
 
 // create schema
 const opportunitySchema = mongoose.Schema({
@@ -13,53 +13,53 @@ const opportunitySchema = mongoose.Schema({
         required: [true, 'Description required'],
         lowercase: true,
     },
-    certificate:{
+    certificate: {
         type: String,
-        default:'Awarded'
+        default: 'Awarded'
     },
-    duration:{
-        type:String,
-        required:[true, 'Duration required']
+    duration: {
+        type: String,
+        required: [true, 'Duration required']
     },
-    location:{
-        type:String,
-        required:[true, 'Location required']
+    location: {
+        type: String,
+        required: [true, 'Location required']
     },
-    hired:{
-        type:Boolean,
-        default:false
+    hired: {
+        type: Boolean,
+        default: false
     },
-    paid:{
-        type:Boolean,
-        default:false
+    paid: {
+        type: Boolean,
+        default: false
     },
-    amount:{
-        type:Number,
-        required:[true, 'Amount required']
+    amount: {
+        type: Number,
+        required: [true, 'Amount required']
     },
-    currency:{
-        type:String,
-        default:'USD'
+    currency: {
+        type: String,
+        default: 'USD'
     },
-    respons:{
-        type:String,
-        default:""
+    respons: {
+        type: String,
+        default: ""
     },
-    requires:{
-        type:String,
-        default:""
+    requires: {
+        type: String,
+        default: ""
     },
-    expOutcome:{
-        type:String,
-        default:""
+    expOutcome: {
+        type: String,
+        default: ""
     },
-    owner:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 },
     //to create tow document in database with category
-    { timestamp: true }  
+    { timestamp: true }
 
 );
 // create model

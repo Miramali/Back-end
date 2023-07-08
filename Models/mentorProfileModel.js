@@ -25,6 +25,11 @@ const MentorSchema = new mongoose.Schema({
     designation: {
         type: String,
     },
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 })
 
 ////////////////////////////////////////////////////////

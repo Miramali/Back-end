@@ -16,19 +16,20 @@ const PostMentor = async (req, res) => {
 
 const GetMentors = async (req, res) => {
     try {
-        const mentor = await Mentor.find({})
+        const mentor = await Mentor.find({}).populate({ path: 'user' })
         res.status(200).send(mentor)
     } catch (e) {
         res.status(500).send(e)
     }
 }
 
+
 /////////////////////////////////////////////////////////////////////////////////
 
 const getById = async (req, res) => {
     try {
         const _id = req.params.id
-        const mentor = await Mentor.findById(_id)
+        const mentor = await Mentor.findById(_id).populate({ path: 'user' })
         if (!mentor) {
             res.status(404).send('UNABLE TO FIND Mentor')
         } else {

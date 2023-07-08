@@ -44,24 +44,23 @@ const userSchema = new mongoose.Schema({
       if (!validator.isEmail(val)) throw new Error("email is invalid");
     },
   },
+  role: {
+    type: String,
+    enum: ['mentee', 'mentor'],
+    default: 'mentor'
+  },
   tokens: [
     {
       type: String,
       required: true,
     },
   ],
-  // messages : [
-  //   {
-  //     type : mongoose.Schema.Types.ObjectId,
-  //     ref  :'Message',
-  //   }
-  // ]
 });
 
-userSchema.virtual("messages" , {
-  ref : "Message",
-  foreignField : "sender",
-  localField   :"_id"
+userSchema.virtual("messages", {
+  ref: "Message",
+  foreignField: "sender",
+  localField: "_id"
 })
 
 

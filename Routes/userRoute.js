@@ -7,6 +7,7 @@ const router = express.Router();
 router.post("/signup", register);
 router.post("/login", login);
 
+
 router.get("/user/:id", async (req, res) => {
   try {
     const user = await User.find({ _id: req.params.id }).populate("messages");
