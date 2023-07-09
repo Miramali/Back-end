@@ -4,10 +4,10 @@ const upload = require('../middleware/upload')
 const MenteeController = require('../Controllers/MenteeProfileController')
 const auth = require("../middleware/auth")
 
-router.post('/menteeProfile', auth, upload.single('avatar'), MenteeController.addNewMentee)
-router.get('/menteeProfile', auth, MenteeController.getAllMentee)
-router.get('/menteeProfile/:id', auth, MenteeController.getMentee)
-router.patch('/menteeProfile/:id', auth, upload.single('avatar'), MenteeController.updateMentee)
-router.delete('/menteeProfile/:id', auth, MenteeController.removeMentee)
+router.post('/mentee', auth, upload.single('avatar'), MenteeController.addNewMentee)
+router.get('/mentee', auth, MenteeController.getAllMentee)
+router.get('/mentee/:id', auth, MenteeController.getMentee)
+router.patch('/mentee/:id', auth, upload.single('avatar'), MenteeController.updateMentee)
+router.delete('/mentee/:id', auth, MenteeController.removeMentee)
 
 module.exports = router
