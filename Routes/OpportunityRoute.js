@@ -2,21 +2,13 @@ const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const auth = require('../middleware/auth');
+const { authOpp } = require('../middleware/reqAndOpp')
 const opportunityController = require('../Controllers/opportunityController');
 
-// get all
-router.get('/opp', auth, asyncHandler(opportunityController.getAllOpportunities));
-
-// get one
-router.get('/opp/:id', auth, asyncHandler(opportunityController.getOpportunityById));
-
-// update
-router.patch('/opp/:id', auth, asyncHandler(opportunityController.updateOpportunity));
-
-// create
-router.post('/opp', auth, asyncHandler(opportunityController.createOpportunity));
-
-// delete
-router.delete('/opp/:id', auth, asyncHandler(opportunityController.deleteOpportunity));
+router.get('/opp', auth, authOpp, asyncHandler(opportunityController.getAllOpportunities));
+router.get('/opp/:id', auth, authOpp, asyncHandler(opportunityController.getOpportunityById));
+router.patch('/opp/:id', auth, authOpp, asyncHandler(opportunityController.updateOpportunity));
+router.post('/opp', auth, authOpp, asyncHandler(opportunityController.createOpportunity));
+router.delete('/opp/:id', auth, authOpp, asyncHandler(opportunityController.deleteOpportunity));
 
 module.exports = router;

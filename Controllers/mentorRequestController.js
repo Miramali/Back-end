@@ -1,9 +1,7 @@
-const {
-  Request
-} = require("../Models/mentorRequestModel");
+const { Request } = require("../Models/mentorRequestModel");
 
 // postRequests////////////////////////
-const postRequests = (req, res, next) => {
+const postRequests = (req, res) => {
   const request = new Request({ ...req.body, mentee: req.user._id });
   request
     .save()
@@ -11,12 +9,12 @@ const postRequests = (req, res, next) => {
       res.status(200).send(request);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(400).send(e.message);
     });
 };
 
 // getRequests////////////////////////
-const getRequests = (req, res, next) => {
+const getRequests = (req, res) => {
   Request.findById({})
   .then((request) => {
     if (!request) {
@@ -25,7 +23,7 @@ const getRequests = (req, res, next) => {
     res.status(200).send(request);
   })
   .catch((e) => {
-    res.status(500).send(e);
+    res.status(500).send(e.message);
   });
 };
 
@@ -40,7 +38,7 @@ const getRequestsByID = (req, res) => {
       res.status(200).send(request);
     })
     .catch((e) => {
-      res.status(500).send(e);
+      res.status(500).send(e.message);
     });
 };
 
@@ -59,7 +57,7 @@ const patchRequets = async (req, res) => {
 
     res.status(200).send(request);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(error.messaga);
   }
 };
 
@@ -75,7 +73,7 @@ const deleteRequests=async (req, res) => {
     }
     res.status(200).send(request);
   } catch (e) {
-    res.status(500).send(e);
+    res.status(500).send(e.message);
   }
 }
 
