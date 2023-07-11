@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer')
 require('dotenv').config()
 
 const userSchema = new mongoose.Schema({
@@ -79,6 +80,32 @@ userSchema.methods.generateToken = async function () {
   user.tokens = user.tokens.concat(token)
   await user.save()
   return token
+}
+
+userSchema.methods.sendEmail = function sendEmail(email, title, text) {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.MAIL_EMAIL,
+      pass: process.env.MAIL_PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  let mailOptions = {
+    from: process.env.MAIL_EMAIL,
+    to: email || "example@gmail.com",
+    subject: title || "mentors project",
+    html: text || "Hello, from your mentors project",
+  };
+  
+  transporter.sendMail(mailOptions, function (err, res) {
+    if (err) {
+      throw new Error(err);
+    }
+  });
 }
 
 userSchema.methods.toJson = function () {

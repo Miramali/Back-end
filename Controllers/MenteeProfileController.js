@@ -7,8 +7,8 @@ const getAllMentee = (req, res, next) => {
     .then((response) => {
       res.json({ response });
     })
-    .catch((error) => {
-      res.json({ message: "error Occured!" + error });
+    .catch((e) => {
+      res.send("error Occured!", e.message);
     });
 };
 
@@ -32,7 +32,7 @@ const addNewMentee = (req, res, next) => {
       res.status(200).send(response);
     })
     .catch((error) => {
-      res.status(400).send(error);
+      res.status(400).send(error.message);
     });
 };
 
@@ -48,7 +48,7 @@ const getMentee = async (req, res, next) => {
       res.status(200).send(mentee);
     })
     .catch((e) => {
-      res.status(500).send(e);
+      res.status(500).send(e.message);
     });
 };
 
@@ -71,14 +71,14 @@ const updateMentee = (req, res, next) => {
   )
     .then((updatedMentee) => {
       if (!updatedMentee) {
-        return res.status(404).json({ error: "Mentee not found." });
+        return res.status(404).send("Mentee not found.");
       }
       updatedMentee.updateRole(updatedMentee)
       res.json(updatedMentee);
     })
-    .catch((error) => {
-      console.log(error)
-      res.status(500).json({ error: "Could not update mentee." });
+    .catch((e) => {
+      console.log(e)
+      res.status(500).send("Could not update mentee.", e.message);
     });
 };
 
@@ -92,7 +92,7 @@ const removeMentee = async (req, res, next) => {
     }
     res.status(200).send(mentee);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(error.messsage);
   }
 };
 

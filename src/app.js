@@ -3,44 +3,47 @@
 const cors = require('cors')
 const express = require('express')
 const app = express()
-const dotenv = require("dotenv");
+require("dotenv").config()
 const passport = require("passport");
 require('../config/dbConnection')
-const mentorRoutes = require('../Routes/mentorProfileRoutes')
-const userRouter = require('../Routes/userRoute')
-const OpportunityRouter = require('../Routes/OpportunityRoute');
+
+const mentorRouter = require('../Routes/mentorRouter')
+const userRouter = require('../Routes/userRouter')
+const opportunityRouter = require('../Routes/opportunityRouter');
 const mailRouter = require("../Routes/mailRouter")
-const menteeRouter = require("../Routes/MenteeProfileRouter");
+const menteeRouter = require("../Routes/menteeRouter");
 const messageRouter = require("../Routes/messageRouter");
-const comment = require("../Routes/comments");
-const requestRounter = require("../Routes/mentorRequestRoute")
-const socialLogin = require("../Routes/SocialAuth");
-const newsletterRouter = require('../Routes/newsletterRoute')
+const commentRouter = require("../Routes/commentsRouter");
+const requestRounter = require("../Routes/requestRouter")
+const socialLoginRouter = require("../Routes/SocialAuthRouter");
+const newsletterRouter = require('../Routes/newsletterRouter')
+const passwordResetRouter=require('../Routes/resetPasswordRouter')
+const passwordForgetRouter=require('../Routes/forgetPasswordRouter')
 const { logger } = require('../middleware/reglogger')
 const errorHandle = require('../middleware/errorLogger')
 const corsOptions = require('../config/corsOptions')
 
-const calendar=require("../Routes/calender")
+const calendar=require("../Routes/calenderRouter")
 const port = process.env.PORT || 5000
-dotenv.config();
 
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use(logger)
-app.use(mentorRoutes)
-app.use(OpportunityRouter);
-app.use(requestRounter);
+app.use(errorHandle);
+app.use('/resetpassword', passwordResetRouter)
+app.use('/forgetpassword', passwordForgetRouter)
+app.use('/subscribe', newsletterRouter)
+app.use(passport.initialize());
+app.use('/mentor', mentorRouter)
+app.use('/opp', opportunityRouter);
+app.use('/requests', requestRounter);
 app.use(userRouter)
 app.use(mailRouter)
-app.use(menteeRouter);
-app.use(messageRouter);
-app.use(passport.initialize());
-app.use(socialLogin);
-app.use(errorHandle);
-app.use(comment);
+app.use('/mentee', menteeRouter);
+app.use('/messages', messageRouter);
+app.use('/auth', socialLoginRouter);
+app.use(commentRouter);
 app.use(calendar)
-app.use(socialLogin)
-app.use(newsletterRouter)
 app.use("/uploads", express.static("uploads"));
 
 app.use((err, req, res, next) => {

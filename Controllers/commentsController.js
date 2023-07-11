@@ -1,5 +1,5 @@
 const createError = require("../utils/createError");
-const Comment = require("../Models/comments");
+const Comment = require("../Models/commentsModel");
 const mentorApplication = require('../Models/opportunityModel')
 
 const addComment = async (req, res, next) => {

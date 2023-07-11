@@ -30,10 +30,8 @@ const createMessage = async (req, res) => {
     const savedMessage = await newMessage.save();
 
     res.status(201).json(savedMessage);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "حدث خطأ أثناء إنشاء المسج", error: error.message });
+  } catch (e) {
+    res.status(500).send(e.message);
   }
 };
 
@@ -49,7 +47,7 @@ const getMessagesById = async (req, res) => {
       res.status(200).send(message);
     })
     .catch((e) => {
-      res.status(500).send(e);
+      res.status(500).send(e.message);
     });
 };
 
@@ -62,10 +60,8 @@ const getMessagesBySender = async (req, res) => {
 
     const messages = await Message.find({ sender: senderId });
     res.status(200).json(messages);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to retrieve messages", error: error.message });
+  } catch (e) {
+    res.status(500).send("Failed to retrieve messages", e.message);
   }
 };
 

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer")
 require('dotenv').config()
 
 const newsletterSchema = new mongoose.Schema({
@@ -16,7 +16,7 @@ const newsletterSchema = new mongoose.Schema({
   },
 });
 
-newsletterSchema.methods.transport = function () {
+newsletterSchema.methods.transport = function (email, title, text) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -29,16 +29,17 @@ newsletterSchema.methods.transport = function () {
   });
   let mailOptions = {
     from: process.env.MAIL_EMAIL,
-    to: this.email,
-    subject: "mentors project",
-    text: "Hello, from your mentors project",
+    to: email || "example@gmail.com",
+    subject: title || "mentors project",
+    html: text || "Hello, from your mentors project",
   };
   transporter.sendMail(mailOptions, function (err, res) {
     if (err) {
-        throw new Error('Error in Sending mail!! ')
+      throw new Error(err);
     }
+    res.send(res)
   });
-};
+}
 
 const Newsletter = mongoose.model("Newsletter", newsletterSchema);
 

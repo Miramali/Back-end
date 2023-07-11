@@ -9,7 +9,7 @@ const getAllOpportunities = async (req, res) => {
         const allOpportunity = await OpportunityModel.find({ owner: req.user._id }).skip(skip).limit(limit);
         res.status(200).json({ results: allOpportunity.length, page, data: allOpportunity });
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json(error.message);
     }
 };
 
@@ -39,7 +39,7 @@ const updateOpportunity = async (req, res) => {
         }
         res.status(200).json({ data: opportunity });
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json(error.message);
     }
 };
 
@@ -66,7 +66,7 @@ const createOpportunity = async (req, res) => {
     });
     res.status(201).json({ data: opportunity });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json(error.message);
   }
 };
 
