@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const upload = require('../middleware/upload')
-const MenteeController = require('../Controllers/MenteeProfileController')
+const MenteeController = require('../Controllers/menteeProfileController')
 const auth = require("../middleware/auth")
 
 router.post('/', auth, upload.single('avatar'), MenteeController.addNewMentee)

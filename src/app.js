@@ -42,7 +42,7 @@ app.use(mailRouter)
 app.use('/mentee', menteeRouter);
 app.use('/messages', messageRouter);
 app.use('/auth', socialLoginRouter);
-app.use(commentRouter);
+app.use('/comments', commentRouter);
 app.use(calendar)
 app.use("/uploads", express.static("uploads"));
 
