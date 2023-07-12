@@ -3,7 +3,8 @@ const {Schema} =mongoose;
 const CommentSchema = new Schema(
   {
     mentorApplicationId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'opportunity',
       required: true,
     },
     userId: {

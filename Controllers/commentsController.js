@@ -26,8 +26,8 @@ const getComment = async (req, res, next) => {
 
 const deleteComment = async (req, res, next) => {
   try {
-    const comment = await Comment.findById(req.params.id);
-    const mentorApp = await mentorApplication.findById(req.params.id);
+    const comment = await Comment.findById(req.params.commentId);
+    const mentorApp = await mentorApplication.findById(comment.mentorApplicationId);
 
     if (req.user._id === comment.userId || req.user._id === mentorApp.owner) {
       await Comment.findByIdAndDelete(req.params.id);
