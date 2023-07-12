@@ -24,7 +24,7 @@ const addNewMentee = (req, res, next) => {
     user: req.user._id,
   });
   mentee.user = req.user._id;
-  mentee.updateRole(mentee)
+  mentee.updateRole(mentee);
 
   mentee
     .save()
@@ -73,11 +73,11 @@ const updateMentee = (req, res, next) => {
       if (!updatedMentee) {
         return res.status(404).send("Mentee not found.");
       }
-      updatedMentee.updateRole(updatedMentee)
+      updatedMentee.updateRole(updatedMentee);
       res.json(updatedMentee);
     })
     .catch((e) => {
-      console.log(e)
+      console.log(e);
       res.status(500).send("Could not update mentee.", e.message);
     });
 };
