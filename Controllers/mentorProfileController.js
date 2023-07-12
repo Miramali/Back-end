@@ -2,12 +2,12 @@ const Profile = require("../Models/profileModel");
 
 const PostMentor = async (req, res) => {
   try {
-        const mentor = new Profile({ ...req.body })
-        mentor.user = req.user._id;
-        mentor.updateRole(mentor)
-        await mentor.save()
-        res.status(200).send(mentor)
-    } catch (e) {
+    const mentor = new Profile({ ...req.body });
+    mentor.user = req.user._id;
+    mentor.updateRole(mentor);
+    await mentor.save();
+    res.status(200).send(mentor);
+  } catch (e) {
     res.status(400).send(e.message);
   }
 };
@@ -55,11 +55,11 @@ const PatchMentor = async (req, res) => {
     const mentor = await Profile.findByIdAndUpdate(_id, req.body, {
       new: true,
       runValidators: true,
-    })
+    });
     if (!mentor) {
       return res.status(404).send("No Mentor Founded");
     }
-    mentor.updateRole(mentor)
+    mentor.updateRole(mentor);
     res.status(200).send(mentor);
   } catch (e) {
     res.status(500).send(e.message);

@@ -1,33 +1,24 @@
-// messageController.js
 const Message = require("../Models/messageModel");
 const User = require("../Models/userModel");
 
-// عملية إنشاء مسج جديد
 const createMessage = async (req, res) => {
   try {
-    const { senderId } = req.params;
-
-    //check is the sender exist
-    const sender = await User.findById(senderId);
-    if (!sender) {
-      return res.status(404).json({ message: "المرسل غير موجود" });
+    const { id } = req.params;
+    const { messageContent } = req.body;
+    const receiver = await User.findById(id);
+    const sender = await User.findById(req.user.id);
+    if (!receiver || !sender) {
+      return res.status(404).send("user not found" );
     }
-
-    const { receiverId, messageContent } = req.body;
-
-    // التحقق مما إذا كان المرسل إلية في جدول
-    const receiver = await User.findById(receiverId);
-    if (!receiver) {
-      return res.status(404).json({ message: "المرسل إليه غير موجود " });
-    }
+    console.log('receiver', receiver.name,', sender: ', sender.name)
 
     const newMessage = new Message({
-      sender: senderId, // استخدام معرف المرسل
-      receiverId,
+      sender: req.user.id, 
+      receiver: receiver.id,
       messageContent,
     });
 
-    const savedMessage = await newMessage.save();
+    const savedMessage = await newMessage.save()
 
     res.status(201).json(savedMessage);
   } catch (e) {
@@ -35,11 +26,11 @@ const createMessage = async (req, res) => {
   }
 };
 
-// get
-
-const getMessagesById = async (req, res) => {
+const getMessageById = async (req, res) => {
   const _id = req.params.id;
-  Message.findById(_id)
+  Message.findById(_id).populate("receiver")
+  .sort({_id:-1}).limit(100)
+  .populate("sender")
     .then((message) => {
       if (!message) {
         return res.status(404).send("message not found");
@@ -51,22 +42,70 @@ const getMessagesById = async (req, res) => {
     });
 };
 
-//////////
-// Get all messages by the sender's ID
-
-const getMessagesBySender = async (req, res) => {
+const getReceiverMessages = async (req, res) => {
   try {
-    const senderId = req.user._id.toString();
+    const _id = req.params.id;
 
-    const messages = await Message.find({ sender: senderId });
+    const messages = await Message.find({ receiver: _id })
+    .sort({_id:-1}).limit(100)
+    .populate("receiver").populate("sender")
     res.status(200).json(messages);
   } catch (e) {
     res.status(500).send("Failed to retrieve messages", e.message);
   }
 };
 
+
+const getSenderMessages = async (req, res) => {
+  try {
+    const _id = req.params.id;
+
+    const messages = await Message.find({ sender: _id })
+    .sort({_id:-1}).limit(100)
+    .populate("receiver").populate("sender")
+    res.status(200).json(messages);
+  } catch (e) {
+    res.status(500).send("Failed to retrieve messages", e.message);
+  }
+};
+
+const searchMessages = async (req, res) => {
+  try {
+    const {searchFor} = req.body;
+    console.log(searchFor)
+
+    
+    const messages = await Message.find({$text: {$search: searchFor}})
+    .sort({'score': {'$meta': 'textScore'}}).limit(25)
+    .populate("receiver").populate("sender")
+    
+    res.status(200).json(messages);
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+};
+
+const searchMessagesByDate = async (req, res) => {
+  try {
+    const {searchFor} = req.body;
+    console.log(searchFor)
+
+    
+    const messages = await Message.find({$text: {$search: searchFor}})
+    .sort({_id:-1}).limit(25)
+    .populate("receiver").populate("sender")
+    
+    res.status(200).json(messages);
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+};
+
 module.exports = {
   createMessage,
-  getMessagesById,
-  getMessagesBySender,
+  getReceiverMessages,
+  getMessageById,
+  getSenderMessages,
+  searchMessages,
+  searchMessagesByDate
 };
